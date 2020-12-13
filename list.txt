@@ -1,2 +1,9 @@
-woof
-cocadoo
+xed 10
+gnome-system-monitor 5
+soffice.bin 15
+
+config:
+jakub
+
+18:00
+6:00
