@@ -101,7 +101,7 @@ int main(int argc, char *argv[]){
 				break;
 			case 'k':
 				system("rm running");
-				system("killall main");				
+				system("killall canceller.o");				
 				break;
 				}
 	else{
