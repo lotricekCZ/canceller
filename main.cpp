@@ -6,6 +6,8 @@
 
 using namespace std;
 string command ("ps -eo user,etime,comm | grep ");
+string name;
+
 class program{
 	public:
 	uint32_t time_shutdown = 2;		// in seconds time in how long the program will be taken down 
@@ -21,7 +23,7 @@ class program{
 		}
 		
 	void parse(string line){
-		cout << name << endl;
+		cout << this->name << endl;
 		size_t usefuls[4] = {0 ,line.find(":"), 0, 0};
 		usefuls[0] = line.rfind(" ", usefuls[1]);
 		usefuls[2] = line.find(":", usefuls[1]+1);
@@ -42,8 +44,8 @@ class program{
 		if(time >= time_shutdown){
 			string killer("killall ");
 			string killed("echo killed ");
-			killer += name;
-			killed += name;
+			killer += this->name;
+			killed += this->name;
 			system(killer.c_str());
 			system(killed.c_str());
 			//~ system();
@@ -63,7 +65,8 @@ void make_list(){
 		// Output the text from the file
 		if (myText == "config:") {
 			getline (config, myText);
-			command += myText;
+			name = myText;
+			command += name;
 			command += " > running";
 			break;
 		}
@@ -85,16 +88,20 @@ void refresh(){
 	while(getline(list, f))
 		for(auto i: blacklist){
 			//~ cout << i.name << endl;
-			if(f.find(i.name) != std::string::npos)
+			if(f.find(i.name.substr(0, (i.name.length() >= 15? 15 :i.name.length()))) != std::string::npos)
 				i.parse(f);
 		}
 	}
 
 int main(int argc, char *argv[]){
 	if (argc > 1)
-		switch(argv[1][0]){
+		switch(*argv[1]){
 			case 'a':
 				if(argc == 3){}
+				break;
+			case 'k':
+				system("rm running");
+				system("killall main");				
 				break;
 				}
 	else{
@@ -107,7 +114,7 @@ int main(int argc, char *argv[]){
 			system(command.c_str());
 			std::string current;
 			while(1){
-				system("sleep 3");
+				system("sleep 2");
 				system(command.c_str());
 				refresh();
 				}

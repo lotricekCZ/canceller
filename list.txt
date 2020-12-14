@@ -1,9 +1,14 @@
 xed 10
 gnome-system-monitor 5
-soffice.bin 15
+soffice.bin 21
+gnome-screenshot
 
 config:
 jakub
 
+refresh:
+3
+
+time:
 18:00
 6:00
